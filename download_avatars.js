@@ -2,9 +2,9 @@
 var consoleInput = process.argv.slice(2); //input from command line
 
 
-if (consoleInput[1] === false) {
-  console.log('Not enough inputs!');
-}
+if (consoleInput[1] === undefined)
+  return console.log('Not enough inputs!');
+
 
 var token = require('./secrets.js'); //requiring git token from secrets.js
 
@@ -14,6 +14,7 @@ var fs = require('fs');  //requiring fs
 
 
 console.log('Welcome to the GitHub Avatar Downloader!');
+
 
 function getRepoContributors(repoOwner, repoName, cb) {
 
@@ -46,9 +47,7 @@ function downloadImageByURL(url, filePath) {
 
 
 getRepoContributors(consoleInput[0], consoleInput[1], function(err, contributors) {
-
   for (var i = 0; i < contributors.length; i++) {
-
     downloadImageByURL(contributors[i].avatar_url,  contributors[i].login);  // gets the avatar url and login name from each object
 
   }
